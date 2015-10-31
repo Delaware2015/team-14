@@ -6,6 +6,7 @@
 
 var User = require('../models/user');
 var Donation = require('../models/donation');
+var Comment = require('../models/comment');
 var Util = require('../util');
 var emailConfig = require('../config/email');
 
@@ -15,6 +16,7 @@ var AdminHandler = {
   getEmail: getEmail,
   getInvite: getInvite,
   getStats: getStats,
+  getComments: getComments,
   postEmail: postEmail,
   postInvite: postInvite
 }
@@ -81,6 +83,24 @@ function getInvite(req, res) {
  */
 function getStats(req, res) {
   res.render('admin/statistics.html', {title: 'Admin Stats'});
+}
+
+/**
+ * Render Admin Comments Page
+ * @param {object} req
+ * @param {object} res
+ */
+function getComments(req, res) {
+  Comment.find({}, function(err, comments) {
+    if(err) {
+      console.log(err);
+    }
+
+    res.render('admin/feedback.html', {
+      title: 'Admin Feedback',
+      comments: comments
+    });
+  });
 }
 
 /**
