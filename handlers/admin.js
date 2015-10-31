@@ -14,6 +14,7 @@ var AdminHandler = {
   getHome: getHome,
   getEmail: getEmail,
   getInvite: getInvite,
+  getStats: getStats,
   postEmail: postEmail,
   postInvite: postInvite
 }
@@ -45,7 +46,8 @@ function getHome(req, res) {
       res.render('admin/home.html', {
         title: 'Admin Home',
         donations: donations,
-        users: users
+        users: users,
+        layout: false
       });
     });
   });
@@ -57,7 +59,10 @@ function getHome(req, res) {
  * @param {object} res
  */
 function getEmail(req, res) {
-  res.render('admin/email.html', {title: 'Admin Email'});
+  res.render('admin/email.html', {
+    title: 'Admin Email',
+    layout: false
+  });
 }
 
 /**
@@ -67,6 +72,15 @@ function getEmail(req, res) {
  */
 function getInvite(req, res) {
   res.render('admin/invite.html', {title: 'Admin Email'});
+}
+
+/**
+ * Render Admin Stats Page
+ * @param {object} req
+ * @param {object} res
+ */
+function getStats(req, res) {
+  res.render('admin/statistics.html', {title: 'Admin Stats'});
 }
 
 /**

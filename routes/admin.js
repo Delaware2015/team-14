@@ -18,6 +18,7 @@ function getAdminRouter(adminHandler, passport) {
   router.get('/home', adminHandler.getHome);
   router.get('/email', adminHandler.getEmail);
   router.get('/invite', adminHandler.getInvite);
+  router.get('/stats', adminHandler.getStats);
 
   var loginConfig = {
     successRedirect: '/admin/home',
