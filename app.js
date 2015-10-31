@@ -17,12 +17,14 @@ var passport = require('passport');
 var session = require('express-session');
 var flash = require('connect-flash');
 
+var configurePassport = require('./config/passport');
+
 // handlers
 var ErrorHandler = require('./handlers/error');
 var IndexHandler = require('./handlers/index');
 
 // routers
-var indexRouter = require('./routes/index')(IndexHandler);
+var getIndexRouter = require('./routes/index');
 
 var app = express();
 
@@ -43,10 +45,13 @@ app.use(session({
   resave: true
 }));
 
-// well put this back once passport is worked out and we can perform local login
-//app.use(passport.initialize());
-//app.use(passport.session());
-//app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+configurePassport(passport);
+
+var indexRouter = getIndexRouter(IndexHandler, passport);
 
 // set routes
 app.use('/', indexRouter);
