@@ -22,9 +22,11 @@ var configurePassport = require('./config/passport');
 // handlers
 var ErrorHandler = require('./handlers/error');
 var IndexHandler = require('./handlers/index');
+var AdminHandler = require('./handlers/admin');
 
 // routers
 var getIndexRouter = require('./routes/index');
+var getAdminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -52,9 +54,11 @@ app.use(flash());
 configurePassport(passport);
 
 var indexRouter = getIndexRouter(IndexHandler, passport);
+var adminRouter = getAdminRouter(AdminHandler, passport);
 
 // set routes
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
 
 // set error handlers
 app.use(ErrorHandler.pageNotFound);
