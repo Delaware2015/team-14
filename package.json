@@ -21,11 +21,15 @@
     "sinon-chai": "^2.8.0"
   },
   "dependencies": {
+    "async": "^1.5.0",
+    "bcrypt": "^0.8.5",
     "body-parser": "^1.14.1",
     "connect-flash": "^0.1.1",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",
     "express-session": "^1.11.3",
+    "mongoose": "^4.2.3",
+    "nodemailer": "^1.8.0",
     "passport": "^0.3.0",
     "passport-local": "^1.0.0"
   }

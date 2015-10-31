@@ -4,6 +4,9 @@
 
 'use strict';
 
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/team14');
+
 // basic express modules
 var express = require('express');
 var path = require('path');
@@ -22,9 +25,13 @@ var configurePassport = require('./config/passport');
 // handlers
 var ErrorHandler = require('./handlers/error');
 var IndexHandler = require('./handlers/index');
+var AdminHandler = require('./handlers/admin');
+var UserHandler = require('./handlers/user');
 
 // routers
 var getIndexRouter = require('./routes/index');
+var getAdminRouter = require('./routes/admin');
+var getUserRouter = require('./routes/user');
 
 var app = express();
 
@@ -52,9 +59,13 @@ app.use(flash());
 configurePassport(passport);
 
 var indexRouter = getIndexRouter(IndexHandler, passport);
+var adminRouter = getAdminRouter(AdminHandler, passport);
+var userRouter = getUserRouter(UserHandler, passport);
 
 // set routes
 app.use('/', indexRouter);
+app.use('/admin', adminRouter);
+app.use('/user', userRouter);
 
 // set error handlers
 app.use(ErrorHandler.pageNotFound);

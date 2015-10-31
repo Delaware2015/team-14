@@ -16,7 +16,7 @@ var IndexHandler = {
  * @param {object} res
  */
 function getIndex(req, res) {
-  res.render('index.html', {title: 'Index'})
+  res.render('index.html', {title: 'Index'});
 }
 
 /**
@@ -25,7 +25,7 @@ function getIndex(req, res) {
  * @param {object} res
  */
 function getSignup(req, res) {
-  res.render('signup.html', {title: 'Signup'})
+  res.render('signup.html', {title: 'Signup'});
 }
 
 /**
@@ -34,7 +34,10 @@ function getSignup(req, res) {
  * @param {object} res
  */
 function getLogin(req, res) {
-  res.render('login.html', {title: 'Login'})
+  res.render('login.html', {
+    title: 'Login',
+    message: req.flash('loginMessage')[0]
+  });
 }
 
 module.exports = IndexHandler;
