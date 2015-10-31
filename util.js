@@ -6,9 +6,11 @@ var mailer = require('nodemailer');
 var transport = mailer.createTransport();
 
 var async = require('async');
+var generator = require('password-generator');
 
 var Util = {
-  emailUsers: emailUsers
+  emailUsers: emailUsers,
+  generatePassword: generator.bind(null, 12, false)
 };
 
 function emailUsers(users, subject, body, cb) {
