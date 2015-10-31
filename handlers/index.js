@@ -34,7 +34,10 @@ function getSignup(req, res) {
  * @param {object} res
  */
 function getLogin(req, res) {
-  res.render('login.html', {title: 'Login'});
+  res.render('login.html', {
+    title: 'Login',
+    message: req.flash('loginMessage')[0]
+  });
 }
 
 module.exports = IndexHandler;

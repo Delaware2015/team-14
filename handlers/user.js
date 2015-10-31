@@ -13,6 +13,8 @@ var UserHandler = {
   getSettings: getSettings,
   createComment: createComment,
   createDonation: createDonation,
+  postComment: postComment,
+  postDonation: postDonation
 }
 
 /**

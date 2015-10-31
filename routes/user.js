@@ -14,7 +14,7 @@ var Router = require('express').Router;
 function getUserRouter(userHandler, passport) {
   var router = Router();
 
-  router.get('/', userHandler.getIndex);
+  router.get('/home', userHandler.getHome);
   router.get('/profile', userHandler.getProfile);
   router.get('/settings', userHandler.getSettings);
   router.get('/comment', userHandler.createComment);
