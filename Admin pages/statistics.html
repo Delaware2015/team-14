@@ -8,6 +8,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <script src="../Charts/Chart.js"></script>
+    <script type="text/javascript">
+
+    function createBarChart() {
+      var data = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+          {
+            label: "Current time period",
+            fillColor: "rgba(0,59,149,0.6)",
+            strokeColor: "rgba(0,59,149,0.6)",
+            highlightFill: "rgba(0,59,149,0.6)",
+            highlightStroke: "rgba(0,59,149,1)",
+            data: [65, 59, 80, 81, 56, 55, 40]
+          },
+          {
+            label: "Last time period",
+            fillColor: "rgba(0,59,149,0.2)",
+            strokeColor: "rgba(0,59,149,0.2)",
+            highlightFill: "rgba(0,59,149,0.2)",
+            highlightStroke: "rgba(0,59,149,1)",
+            data: [28, 48, 40, 19, 86, 27, 90]
+          }
+        ]
+      };
+
+      var cht = document.getElementById('barChart');
+      var ctx = cht.getContext('2d');
+      var lineChart = new Chart(ctx).Bar(data);
+    }
+
+    function createLineChart() {
+      var data = {
+        labels: ["January", "February", "March", "April", "May", "June", "July"],
+        datasets: [
+          {
+            label: "Current time period",
+            fillColor: "rgba(0,59,149,0.6)",
+            strokeColor: "rgba(0,59,149,1)",
+            pointColor: "rgba(0,59,149,1)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#555",
+            pointHighlightStroke: "rgba(0,59,149,0.6)",
+            data: [65, 59, 80, 81, 56, 55, 40] // pull from DB
+          },
+          {
+            label: "Last time period",
+            fillColor: "rgba(0,59,149,0.2)",
+            strokeColor: "rgba(0,59,149,0.4)",
+            pointColor: "rgba(0,59,149,0.4)",
+            pointStrokeColor: "#fff",
+            pointHighlightFill: "#555",
+            pointHighlightStroke: "rgba(0,59,149,0.6)",
+            data: [28, 48, 40, 19, 86, 27, 90] // pull from DB
+          }
+        ]
+      };
+      var cht = document.getElementById('lineChart');
+      var ctx = cht.getContext('2d');
+      var lineChart = new Chart(ctx).Line(data);
+    }
+
+    function createPieChart() {
+
+      var data = [
+          {
+              value: 300,
+              color:"#F7464A",
+              highlight: "#FF5A5E",
+              label: "Clothes"
+          },
+          {
+              value: 50,
+              color: "#46BFBD",
+              highlight: "#5AD3D1",
+              label: "Other"
+          },
+          {
+              value: 100,
+              color: "#FDB45C",
+              highlight: "#FFC870",
+              label: "Toys"
+          }
+      ];
+
+      var cht = document.getElementById('pieChart');
+      var ctx = cht.getContext('2d');
+      var pieChart = new Chart(ctx).Pie(data);
+    }
+
+    </script>
 
     <title>Donation Statistics</title>
 
@@ -32,7 +123,7 @@
 
 </head>
 
-<body>
+<body onload="createLineChart(); createBarChart(); createPieChart();">
 
     <div id="wrapper">
 
@@ -46,7 +137,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Statistics</a>
+                <a class="navbar-brand" href="dashboard.html">Statistics</a>
             </div>
             <!-- Top Menu Items -->
             <ul class="nav navbar-right top-nav">
@@ -135,7 +226,7 @@
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
                   <li>
-                      <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                      <a href="dashboard.html"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                   </li>
                   <li class="active">
                       <a href="statistics.html"><i class="fa fa-fw fa-bar-chart-o"></i>Statistics</a>
@@ -159,11 +250,11 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            Statistics
+                            Statistics <small>Analysis of donation data</small>
                         </h1>
                         <ol class="breadcrumb">
                             <li>
-                                <i class="fa fa-dashboard"></i>  <a href="index.html">Dashboard</a>
+                                <i class="fa fa-dashboard"></i>  <a href="dashboard.html">Dashboard</a>
                             </li>
                             <li class="active">
                                 <i class="fa fa-bar-chart-o"></i> Statistics
@@ -173,10 +264,9 @@
                 </div>
                 <!-- /.row -->
 
-                <!-- Flot Charts -->
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="page-header">Donations Over Time</h2>
+                        <h2 class="page-header">Item Donations Over Time</h2>
                     </div>
                 </div>
                 <!-- /.row -->
@@ -185,103 +275,31 @@
                     <div class="col-lg-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Line Graph for Donations over one year</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Line graph for donations vs. one year ago</h3>
                             </div>
                             <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-line-chart"></div>
-                                </div>
+                                  <canvas id="lineChart" width="1600" height="400"></canvas>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Pie Chart Example with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-pie-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Multiple Axes Line Graph Example with Tooltips and Raw Data</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-multiple-axes-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Moving Line Chart</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-moving-line-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="panel panel-primary">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div class="flot-chart">
-                                    <div class="flot-chart-content" id="flot-bar-chart"></div>
-                                </div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /.row -->
-
-                <!-- Morris Charts -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h2 class="page-header">Morris Charts</h2>
-                        <p class="lead">Morris.js is a very simple API for drawing line, bar, area and donut charts. For full usage instructions and documentation for Morris.js charts, visit <a href="http://morrisjs.github.io/morris.js/">http://morrisjs.github.io/morris.js/</a>.</p>
                     </div>
                 </div>
                 <!-- /.row -->
 
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-green">
+                        <h2 class="page-header">Monetary Donations Over Time</h2>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Area Line Graph Example with Tooltips</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Bar graph for monetary donations vs. one year ago</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-area-chart"></div>
+                                  <canvas id="barChart" width="1600" height="400"></canvas>
                             </div>
                         </div>
                     </div>
@@ -289,42 +307,20 @@
                 <!-- /.row -->
 
                 <div class="row">
-                    <div class="col-lg-4">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Donut Chart Example</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-donut-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-lg-12">
+                        <h2 class="page-header">Breakdown of Donations</h2>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="panel panel-red">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Line Graph Example with Tooltips</h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="morris-line-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-12">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-long-arrow-right"></i> Bar Graph Example</h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i> Pie chart of different donation items</h3>
                             </div>
                             <div class="panel-body">
-                                <div id="morris-bar-chart"></div>
-                                <div class="text-right">
-                                    <a href="#">View Details <i class="fa fa-arrow-circle-right"></i></a>
-                                </div>
+                                  <canvas id="pieChart" width="400" height="400"></canvas>
                             </div>
                         </div>
                     </div>
