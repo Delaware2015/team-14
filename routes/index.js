@@ -11,10 +11,27 @@ var Router = require('express').Router;
  * @param {object} indexHandler
  * @return {object}
  */
-function getIndexRouter(indexHandler) {
+function getIndexRouter(indexHandler, passport) {
   var router = Router();
 
   router.get('/', indexHandler.getIndex);
+  router.get('/signup', indexHandler.getSignup);
+  router.get('/login', indexHandler.getLogin);
+
+  var signupConfig = {
+    successRedirect: '/home',
+    failureRedirect: '/signup',
+    failureFlash: true
+  };
+
+  var loginConfig = {
+    successRedirect: '/home',
+    failureRedirect: '/login',
+    failureFlash: true
+  };
+
+  router.post('/signup', passport.authenticate('local-signup', signupConfig));
+  router.post('/login', passport.authenticate('local-login', loginConfig));
 
   return router;
 }
