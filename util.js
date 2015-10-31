@@ -19,8 +19,8 @@ function emailUsers(users, subject, body, cb) {
     var mailOptions = {
       from: emailConfig.from,
       to: user.email,
-      subject: 'please',
-      text: 'work'
+      subject: subject,
+      text: body
     };
 
     transport.sendMail(mailOptions, function(err, res) {

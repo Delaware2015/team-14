@@ -63,6 +63,7 @@ function getHome(req, res) {
 function getEmail(req, res) {
   res.render('admin/email.html', {
     title: 'Admin Email',
+    message: req.flash('emailMessage'),
     layout: false
   });
 }
@@ -73,7 +74,10 @@ function getEmail(req, res) {
  * @param {object} res
  */
 function getInvite(req, res) {
-  res.render('admin/invite.html', {title: 'Admin Email'});
+  res.render('admin/invite.html', {
+    title: 'Admin Email',
+    message: req.flash('emailMessage')
+  });
 }
 
 /**
@@ -109,15 +113,20 @@ function getComments(req, res) {
  * @param {object} res
  */
 function postEmail(req, res) {
-  var location = req.body.location;
+  var subject = req.body.subject;
   var body = req.body.body;
+  console.log('so far so good');
 
-  // need to decide the different options available
-  // query for users
-  var users = [{email: 'chrismwhelan95@gmail.com'}];
-  processUsers(users);
+  User.find({}, function(err, users) {
+    if(err) {
+      console.log(err);
+    }
+
+    processUsers(users);
+  });
 
   function processUsers(users) {
+    console.log(users);
     Util.emailUsers(users, subject, body, function(err) {
       if(err) {
         req.flash('emailMessage', 'Failed to Send');
@@ -150,6 +159,7 @@ function postInvite(req, res, next) {
 
       if(user) {
         req.flash('emailMessage', 'User exists');
+        res.redirect('/admin/invite');
       } else {
         var newUser = new User();
         newUser.email = email;
@@ -157,19 +167,19 @@ function postInvite(req, res, next) {
 
         newUser.save(function(err) {
           req.flash('emailMessage', 'User created');
-          Util.emailUsers([user], subject, body, emailCallback);
+          Util.emailUsers([newUser], subject, body, emailCallback);
         });
       }
     });
 
-    function emailCallback() {
+    function emailCallback(err) {
       if(err) {
         req.flash('emailMessage', 'Failed to Send');
       } else {
         req.flash('emailMessage', 'Email Sent');
       }
 
-      res.redirect('/admin/email');
+      res.redirect('/admin/invite');
     }
   }
 }

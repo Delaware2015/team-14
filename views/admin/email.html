@@ -120,7 +120,7 @@
                       <a href="http://localhost:3000/admin/home"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                   </li>
                   <li>
-                      <a href="statistics.html"><i class="fa fa-fw fa-bar-chart-o"></i>Statistics</a>
+                      <a href="http://localhost:3000/admin/stats"><i class="fa fa-fw fa-bar-chart-o"></i>Statistics</a>
                   </li>
                   <li class="active">
                       <a href="email.html"><i class="fa fa-fw fa-table"></i>Email</a>
@@ -128,6 +128,9 @@
                   <li>
                       <a href="http://localhost:3000/admin/feedback"><i class="fa fa-fw fa-edit"></i> Feedback</a>
                   </li>
+                    <li>
+                        <a href="http://localhost:3000/admin/invite"><i class="fa fa-fw fa-edit"></i> Invite</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -158,22 +161,23 @@
                 <div class="row">
                     <div class="col-lg-6">
 
-                        <form role="form">
+                        <form role="form" action="http://localhost:3000/admin/email" method="POST">
 
                             <div class="form-group">
                                 <label>Subject</label>
-                                <input class="form-control">
+                                <input name="Subject" class="form-control">
                                 <p class="help-block">Subject of the email</p>
                             </div>
 
                             <div class="form-group">
                                 <label>Email body</label>
-                                <textarea class="form-control" rows="10"></textarea>
+                                <textarea name="body" class="form-control" rows="10"></textarea>
                             </div>
                             <button type="submit" class="btn btn-default">
                               Send Email
                             </button>
                         </form>
+                        <p>{{message}}</p>
                     </div>
                 </div>
             </div>
