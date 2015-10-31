@@ -5,6 +5,8 @@
 'use strict';
 
 var User = require('../models/user');
+var Donation = require('../models/donation');
+var Comment = require('../models/comment');
 var Util = require('../util');
 var emailConfig = require('../config/email');
 
@@ -13,6 +15,8 @@ var AdminHandler = {
   getHome: getHome,
   getEmail: getEmail,
   getInvite: getInvite,
+  getStats: getStats,
+  getComments: getComments,
   postEmail: postEmail,
   postInvite: postInvite
 }
@@ -23,7 +27,10 @@ var AdminHandler = {
  * @param {object} res
  */
 function getLogin(req, res) {
-  res.render('admin/login.html', {title: 'Admin Login'});
+  res.render('admin/login.html', {
+    title: 'Admin Login',
+    message: req.flash('adminMessage')
+  });
 }
 
 /**
@@ -40,7 +47,9 @@ function getHome(req, res) {
     User.find({}, function(err, users) {
       res.render('admin/home.html', {
         title: 'Admin Home',
-        donations: donations
+        donations: donations,
+        users: users,
+        layout: false
       });
     });
   });
@@ -52,7 +61,10 @@ function getHome(req, res) {
  * @param {object} res
  */
 function getEmail(req, res) {
-  res.render('admin/email.html', {title: 'Admin Email'});
+  res.render('admin/email.html', {
+    title: 'Admin Email',
+    layout: false
+  });
 }
 
 /**
@@ -62,6 +74,33 @@ function getEmail(req, res) {
  */
 function getInvite(req, res) {
   res.render('admin/invite.html', {title: 'Admin Email'});
+}
+
+/**
+ * Render Admin Stats Page
+ * @param {object} req
+ * @param {object} res
+ */
+function getStats(req, res) {
+  res.render('admin/statistics.html', {title: 'Admin Stats'});
+}
+
+/**
+ * Render Admin Comments Page
+ * @param {object} req
+ * @param {object} res
+ */
+function getComments(req, res) {
+  Comment.find({}, function(err, comments) {
+    if(err) {
+      console.log(err);
+    }
+
+    res.render('admin/feedback.html', {
+      title: 'Admin Feedback',
+      comments: comments
+    });
+  });
 }
 
 /**

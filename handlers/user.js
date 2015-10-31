@@ -6,6 +6,7 @@
 
 var User = require('../models/user');
 var Donation = require('../models/donation');
+var Comment = require('../models/comment');
 
 var UserHandler = {
   getHome: getHome,
@@ -71,7 +72,7 @@ function createComment(req, res) {
  * @param {object} res
  */
 function createDonation(req, res) {
-  res.render('user/donation.html', {title: 'Comment'});
+  res.render('user/donation.html', {title: 'Donate'});
 }
 
 /**

@@ -44,6 +44,8 @@ app.set('view engine', '.html');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('views/', express.static(path.join(__dirname, 'public')));
+app.use('views/admin', express.static(path.join(__dirname, 'public')));
 
 // set passport
 app.use(session({

@@ -19,13 +19,13 @@ function getIndexRouter(indexHandler, passport) {
   router.get('/login', indexHandler.getLogin);
 
   var signupConfig = {
-    successRedirect: '/home',
+    successRedirect: '/user/home',
     failureRedirect: '/signup',
     failureFlash: true
   };
 
   var loginConfig = {
-    successRedirect: '/home',
+    successRedirect: '/user/home',
     failureRedirect: '/login',
     failureFlash: true
   };

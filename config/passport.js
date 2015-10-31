@@ -6,10 +6,11 @@ var mongoose = require('mongoose');
 
 var LocalStrategy = require('passport-local');
 var User = require('../models/user');
+var Admin = require('../models/admin');
 
 function configurePassport(passport) {
   passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser(function(id, done) {
@@ -35,6 +36,8 @@ function configurePassport(passport) {
       }
 
       var newUser = new User();
+      newUser.fname = req.body.fname;
+      newUser.lname = req.body.lname;
       newUser.email = email;
       newUser.password = newUser.createHash(password);
 
