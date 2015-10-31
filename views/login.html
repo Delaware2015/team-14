@@ -1,23 +1,27 @@
 <div class="container">
-  <form action="/login" method="POST">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <form action="/login" method="POST">
 
-    <div class="row">
-      <h1 class="col-xs-4 col-xs-offset-4">Good Will</h1>
-    </div>
-    <div class="row">
-      <input class="col-xs-4 col-xs-offset-4" name="email" type="text" placeholder="Email"/>
-    </div>
-    <div class="row">
-      <input class="col-xs-4 col-xs-offset-4" name="password" type="password" placeholder="Password"/>
-    </div>
+        <div class="row">
+          <h1 class="col-xs-4 col-xs-offset-4">Good Will</h1>
+        </div>
+        <div class="row">
+          <input class="col-xs-4 col-xs-offset-4" name="email" type="text" placeholder="Email"/>
+        </div>
+        <div class="row">
+          <input class="col-xs-4 col-xs-offset-4" name="password" type="password" placeholder="Password"/>
+        </div>
 
-    <div class="row">
-      <p class="col-xs-4 col-xs-offset-4">{{ message }}</p>
-    </div>
+        <div class="row">
+          <p class="col-xs-4 col-xs-offset-4">{{ message }}</p>
+        </div>
 
-    <div class="row">
-      <button class="btn btn-primary btn-lg col-xs-4 col-xs-offset-4">Login</button>
+        <div class="row">
+          <button class="btn btn-primary btn-lg col-xs-4 col-xs-offset-4">Login</button>
+        </div>
+      
+      </form>
     </div>
-
-  </form>
+  </div>
 </div>

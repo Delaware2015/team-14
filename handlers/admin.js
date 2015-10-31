@@ -4,6 +4,7 @@
 
 'use strict';
 
+var User = require('../models/user');
 var Util = require('../util');
 var emailConfig = require('../config/email');
 
@@ -31,7 +32,18 @@ function getLogin(req, res) {
  * @param {object} res
  */
 function getHome(req, res) {
-  res.render('admin/home.html', {title: 'Admin Home'});
+  Donation.find({}, function(err, donations) {
+    if(err) {
+      console.log(err);
+    }
+
+    User.find({}, function(err, users) {
+      res.render('admin/home.html', {
+        title: 'Admin Home',
+        donations: donations
+      });
+    });
+  });
 }
 
 /**
@@ -84,7 +96,7 @@ function postEmail(req, res) {
  * @param {object} req
  * @param {object} res
  */
-function postInvite(req, res) {
+function postInvite(req, res, next) {
   var email = req.body.email;
   var password = Util.generatePassword();
   var subject = 'GoodWill Invite';
@@ -92,16 +104,24 @@ function postInvite(req, res) {
              'password: ' + password;
 
   if(email) {
-    // search for user in databae by email
-    var user = null;
-    if(user) {
-      req.flash('emailMessage', 'User exists');
-    } else {
-      // create user
-      var user = {email: 'my@email.com'};
-      req.flash('emailMessage', 'User created');
-      Util.emailUsers([user], subject, body, emailCallback);
-    }
+    User.findOne({email: email}, function(err, user) {
+      if(err) {
+        return next(err);
+      }
+
+      if(user) {
+        req.flash('emailMessage', 'User exists');
+      } else {
+        var newUser = new User();
+        newUser.email = email;
+        newUser.password = newUser.createHash(password);
+
+        newUser.save(function(err) {
+          req.flash('emailMessage', 'User created');
+          Util.emailUsers([user], subject, body, emailCallback);
+        });
+      }
+    });
 
     function emailCallback() {
       if(err) {
