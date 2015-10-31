@@ -5,6 +5,7 @@
 'use strict';
 
 var User = require('../models/user');
+var Donation = require('../models/donation');
 var Util = require('../util');
 var emailConfig = require('../config/email');
 
@@ -23,7 +24,10 @@ var AdminHandler = {
  * @param {object} res
  */
 function getLogin(req, res) {
-  res.render('admin/login.html', {title: 'Admin Login'});
+  res.render('admin/login.html', {
+    title: 'Admin Login',
+    message: req.flash('adminMessage')
+  });
 }
 
 /**
@@ -40,7 +44,8 @@ function getHome(req, res) {
     User.find({}, function(err, users) {
       res.render('admin/home.html', {
         title: 'Admin Home',
-        donations: donations
+        donations: donations,
+        users: users
       });
     });
   });
