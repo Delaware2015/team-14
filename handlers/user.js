@@ -28,7 +28,6 @@ function getHome(req, res) {
     if(err) {
       console.log(err);
     }
-    console.log(req.user);
 
     res.render('user/home.html', {
       title: 'Profile',
@@ -36,14 +35,6 @@ function getHome(req, res) {
       user: req.user
     });
   });
-}
-
-/**
- * Render Profile Page
- * @param {object} req
- * @param {object} res
- */
-function getProfile(req, res) {
 }
 
 /**
@@ -62,12 +53,24 @@ function getSettings(req, res) {
 }
 
 /**
+ * Render Profile Page
+ * @param {object} req
+ * @param {object} res
+ */
+function getProfile(req, res) {
+
+}
+
+/**
  * Render Comment Page
  * @param {object} req
  * @param {object} res
  */
 function createComment(req, res) {
-  res.render('user/comment.html', {title: 'Comment'});
+  res.render('user/comment.html', {
+    title: 'Comment',
+    user: req.user
+  });
 }
 
 /**
@@ -76,7 +79,10 @@ function createComment(req, res) {
  * @param {object} res
  */
 function createDonation(req, res) {
-  res.render('user/donation.html', {title: 'Donate'});
+  res.render('user/donation.html', {
+    title: 'Donate',
+    user: req.user
+  });
 }
 
 /**
