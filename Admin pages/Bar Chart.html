@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Sample Bar Chart</title>
+  <script src="../Charts/Chart.js"></script>
+  <script type="text/javascript">
+  function createChart() {
+
+    var data = [
+        {
+            value: 300,
+            color:"#F7464A",
+            highlight: "#FF5A5E",
+            label: "Red"
+        },
+        {
+            value: 50,
+            color: "#46BFBD",
+            highlight: "#5AD3D1",
+            label: "Green"
+        },
+        {
+            value: 100,
+            color: "#FDB45C",
+            highlight: "#FFC870",
+            label: "Yellow"
+        }
+    ];
+
+    var cht = document.getElementById('trChart');
+    var ctx = cht.getContext('2d');
+    var lineChart = new Chart(ctx).Pie(data);
+  }
+  </script></head>
+  <body onload="createChart();">
+    <canvas id="trChart" width="400" height="400"></canvas>
+  </body></html>
