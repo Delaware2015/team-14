@@ -35,21 +35,38 @@ function configurePassport(passport) {
   var loginStrategy = new LocalStrategy(config, function(req, email, password, done) {
     // search for user in database
     // fix when real...
-    var newUser = {email: 'my@email.com', password: 'password'};
+    var user = {email: 'my@email.com', password: 'password'};
     if(!user) {
       return done(null, false, req.flash('loginMessage', 'User does not exist'));
     }
 
     // these should be hashed and salted... later
-    if(!user.password === password) {
+    if(user.password !== password) {
       return done(null, false, req.flash('loginMessage', 'Incorrect password'));
     }
 
     done(null, user);
   });
 
+  var adminStrategy = new LocalStrategy(config, function(req, email, password, done) {
+    // search for admin user in database
+    // fix when real...
+    var admin = {email: 'my@email', password: 'password'};
+    if(!admin) {
+      return done(null, false, req.flash('adminMessage', 'Admin User does not exist'));
+    }
+
+    // these should be hashed and salted... later
+    if(admin.password !== password) {
+      return done(null, false, req.flash('adminMessage', 'Incorrect password'));
+    }
+
+    done(null, admin);
+  });
+
   passport.use('local-signup', signupStrategy);
   passport.use('local-login', loginStrategy);
+  passport.use('admin-login', adminStrategy);
 }
 
 module.exports = configurePassport;

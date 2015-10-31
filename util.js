@@ -7,6 +7,7 @@ var transport = mailer.createTransport();
 
 var async = require('async');
 var generator = require('password-generator');
+var emailConfig = require('./config/email');
 
 var Util = {
   emailUsers: emailUsers,
@@ -16,7 +17,7 @@ var Util = {
 function emailUsers(users, subject, body, cb) {
   async.each(users, function(user, done) {
     var mailOptions = {
-      from: 'chrismwhelan95@gmail.com',
+      from: emailConfig.from,
       to: user.email,
       subject: 'please',
       text: 'work'
