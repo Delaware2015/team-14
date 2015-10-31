@@ -9,6 +9,7 @@ var ObjectId = Schema.ObjectId;
 var DonationSchema = new Schema({
   receiptId: String,
   userId: ObjectId,
+  amount: Number,
   dateCreated: {type: Date, default: Date()},
   items: {type: Array, default: []}
 });

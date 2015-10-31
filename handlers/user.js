@@ -24,7 +24,18 @@ var UserHandler = {
  * @param {object} res
  */
 function getHome(req, res) {
-  res.render('user/home.html', {title: 'Home'});
+  Donation.find({}, function(err, donations) {
+    if(err) {
+      console.log(err);
+    }
+    console.log(req.user);
+
+    res.render('user/home.html', {
+      title: 'Profile',
+      donations: donations,
+      user: req.user
+    });
+  });
 }
 
 /**
@@ -33,13 +44,6 @@ function getHome(req, res) {
  * @param {object} res
  */
 function getProfile(req, res) {
-  Donation.find({userId: req.user.id}, function(err, donations) {
-    if(err) {
-      console.log(err);
-    }
-
-    res.render('user/profile.html', {title: 'Profile', donations: donations});
-  });
 }
 
 /**
@@ -98,15 +102,25 @@ function postComment(req, res) {
   }
 }
 
-// this is not right at all
-// TODO get your shit together
 /**
  * Post Donation
  * @param {object} req
  * @param {object} res
  */
 function postDonation(req, res) {
-  res.render('user/donation.html', {title: 'Comment'});
+  var amount = req.body.amount;
+  var receipt = req.body.receipt;
+  var donation = new Donation();
+
+  donation.amount = amount;
+  donation.receiptId = receipt;
+  donation.save(function(err) {
+    if(err) {
+      console.log(err);
+    }
+
+    res.redirect('/user/home');
+  });
 }
 
 module.exports = UserHandler;

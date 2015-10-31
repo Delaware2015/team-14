@@ -146,6 +146,8 @@ function postEmail(req, res) {
  */
 function postInvite(req, res, next) {
   var email = req.body.email;
+  var fname = req.body.fname;
+  var lname = req.body.lname;
   var password = Util.generatePassword();
   var subject = 'GoodWill Invite';
   var body = 'email: ' + email + '\n' +
@@ -164,6 +166,8 @@ function postInvite(req, res, next) {
         var newUser = new User();
         newUser.email = email;
         newUser.password = newUser.createHash(password);
+        newUser.fname = fname;
+        newUser.lname = lname;
 
         newUser.save(function(err) {
           req.flash('emailMessage', 'User created');
