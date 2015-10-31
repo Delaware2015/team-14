@@ -35,6 +35,8 @@ function configurePassport(passport) {
       }
 
       var newUser = new User();
+      newUser.fname = req.body.fname;
+      newUser.lname = req.body.lname;
       newUser.email = email;
       newUser.password = newUser.createHash(password);
 
